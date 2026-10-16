@@ -1,106 +1,440 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#090b12">
-<title>LilStream — Films, séries & animes</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090914">
+<title>LilStream — Anime, Films & Séries</title>
 <style>
-:root{--bg:#090b12;--panel:#131722;--muted:#aab0c0;--red:#e50935;--line:#272c3a;--white:#f7f8fc}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--white);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif}
-button,input{font:inherit}button{cursor:pointer}.top{position:sticky;top:0;z-index:10;background:#090b12ed;backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-.nav{max-width:1200px;margin:auto;padding:14px 20px;display:flex;align-items:center;gap:24px}.brand{font-size:1.45rem;font-weight:900;letter-spacing:-.7px;white-space:nowrap}.brand b{color:var(--red)}nav{display:flex;gap:16px}nav button,.text-btn{background:none;border:0;color:#d5d8e2;padding:8px 0}nav button:hover,.text-btn:hover{color:white}.search{margin-left:auto;width:min(290px,35vw);background:#171b27;border:1px solid #34394a;color:white;border-radius:12px;padding:10px 12px;outline:none}.search:focus{border-color:var(--red)}
-main{max-width:1200px;margin:auto;padding:22px 20px 70px}.hero{min-height:320px;border-radius:22px;overflow:hidden;display:flex;align-items:end;padding:clamp(22px,5vw,48px);background:radial-gradient(ellipse at 75% 20%,#762039 0,transparent 32%),linear-gradient(115deg,#171a28 0%,#291321 58%,#090b12 100%);position:relative}.hero:after{content:"L";position:absolute;right:8%;top:-35%;font-size:clamp(220px,40vw,460px);font-weight:1000;color:#ffffff0b;pointer-events:none}.hero-content{position:relative;z-index:1;max-width:620px}.eyebrow{color:#ff6b89;text-transform:uppercase;font-size:.78rem;font-weight:800;letter-spacing:2px}.hero h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.03;margin:12px 0}.hero p{color:#c5c8d3;max-width:520px;line-height:1.6}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.primary,.secondary{border:0;border-radius:11px;padding:12px 17px;font-weight:750}.primary{background:var(--red);color:white}.secondary{background:#ffffff17;border:1px solid #ffffff28;color:white}.filters{display:flex;gap:8px;flex-wrap:wrap;margin:26px 0}.chip{border:1px solid #34394a;background:#141824;color:#d5d8e2;padding:8px 14px;border-radius:99px}.chip.active,.chip:hover{background:var(--red);border-color:var(--red);color:white}.section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:28px 0 14px}.section-head h2{margin:0;font-size:1.25rem}.muted{color:var(--muted);font-size:.9rem}.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}.item{min-width:0;cursor:pointer}.poster{aspect-ratio:2/3;border-radius:13px;overflow:hidden;position:relative;display:flex;align-items:end;padding:14px;background:linear-gradient(150deg,var(--c1),var(--c2));border:1px solid #ffffff10;transition:transform .18s,box-shadow .18s}.poster:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 75% 22%,#ffffff40,transparent 25%),linear-gradient(0deg,#07080ee8,transparent 65%)}.poster:hover{transform:translateY(-4px);box-shadow:0 12px 35px #0008}.poster .symbol{position:absolute;top:16%;left:0;right:0;text-align:center;font-size:clamp(2rem,5vw,4.2rem);font-weight:1000;color:#ffffff40;text-shadow:0 4px 25px #0005}.poster .kind{position:absolute;top:10px;left:10px;background:#090b12bd;border-radius:6px;padding:5px 7px;font-size:.68rem}.poster strong{position:relative;z-index:1;font-size:1rem;line-height:1.2}.item h3{font-size:.95rem;margin:10px 0 4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.item .meta{color:var(--muted);font-size:.8rem}.empty{padding:40px;text-align:center;color:var(--muted);grid-column:1/-1;background:var(--panel);border-radius:14px}.notice{border:1px solid var(--line);background:#111520;border-radius:14px;padding:15px 17px;margin-top:32px;color:var(--muted);font-size:.9rem;line-height:1.6}.notice strong{color:white}.footer{border-top:1px solid var(--line);padding:25px 20px;color:var(--muted);text-align:center;font-size:.85rem}
-.modal{position:fixed;inset:0;z-index:30;background:#000b;display:none;align-items:center;justify-content:center;padding:20px}.modal.open{display:flex}.dialog{width:min(620px,100%);background:#141824;border:1px solid #34394a;border-radius:18px;overflow:hidden;box-shadow:0 30px 90px #0009}.dialog-top{padding:25px;background:linear-gradient(120deg,#282033,#111521);position:relative}.close{position:absolute;right:14px;top:14px;border:0;border-radius:50%;background:#ffffff20;color:white;width:36px;height:36px;font-size:1.2rem}.dialog-body{padding:22px}.dialog h2{margin:0 0 8px;font-size:1.7rem}.dialog p{color:#c2c6d3;line-height:1.65}.pill{display:inline-block;background:#252a39;color:#e0e3eb;border-radius:6px;padding:5px 8px;font-size:.78rem;margin-right:6px}
-@media(max-width:900px){.grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}}
-@media(max-width:650px){.nav{gap:12px;padding:12px 14px;flex-wrap:wrap}.brand{font-size:1.25rem}nav{order:3;width:100%;justify-content:space-between}nav button{font-size:.9rem}.search{width:auto;flex:1;min-width:100px}.search::placeholder{color:#9aa0b0}main{padding:15px 14px 45px}.hero{min-height:300px;border-radius:17px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:17px 12px}.poster .symbol{font-size:3.5rem}.section-head h2{font-size:1.1rem}.item h3{font-size:.9rem}}
+:root {
+  --bg: #090914;
+  --panel: #141426;
+  --purple: #8b5cf6;
+  --pink: #ec4899;
+  --text: #f8f7ff;
+  --muted: #aaa8c2;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, Arial, sans-serif;
+}
+button, input { font: inherit; }
+button { cursor: pointer; }
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 17px 5%;
+  background: #0c0b19;
+  border-bottom: 1px solid #27243b;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.logo {
+  font-size: 25px;
+  font-weight: 900;
+  letter-spacing: -1px;
+}
+.logo span { color: var(--pink); }
+.search {
+  width: min(340px, 55%);
+  padding: 11px 14px;
+  border: 1px solid #39334f;
+  border-radius: 25px;
+  background: #171629;
+  color: white;
+  outline: none;
+}
+.search:focus { border-color: var(--purple); }
+.hero {
+  min-height: 340px;
+  padding: 55px 6%;
+  display: flex;
+  align-items: center;
+  background:
+    radial-gradient(ellipse at 80% 30%, #a21caf88, transparent 38%),
+    radial-gradient(ellipse at 65% 90%, #4f46e588, transparent 40%),
+    linear-gradient(120deg, #171329, #090914 75%);
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: "✦";
+  position: absolute;
+  right: 8%;
+  top: 12%;
+  font-size: clamp(130px, 24vw, 270px);
+  color: #ffffff0c;
+}
+.hero-content { max-width: 650px; position: relative; z-index: 1; }
+.eyebrow {
+  color: #f0abfc;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 12px;
+}
+h1 { font-size: clamp(35px, 6vw, 62px); line-height: 1.04; margin: 15px 0; }
+.hero p { color: #c7c3dc; max-width: 480px; line-height: 1.7; }
+.primary {
+  background: linear-gradient(100deg, var(--purple), var(--pink));
+  border: 0;
+  border-radius: 9px;
+  color: white;
+  padding: 12px 20px;
+  font-weight: 800;
+  margin-top: 10px;
+}
+main { padding: 28px 5% 55px; }
+h2 { font-size: 22px; margin: 0 0 16px; }
+.categories {
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+.chip {
+  border: 1px solid #37324e;
+  border-radius: 22px;
+  background: #151426;
+  color: #d6d1e8;
+  padding: 9px 17px;
+}
+.chip.active, .chip:hover {
+  background: var(--purple);
+  border-color: var(--purple);
+  color: white;
+}
+.section { margin: 28px 0 38px; }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
+  gap: 18px 13px;
+}
+.card {
+  min-width: 0;
+  border: 0;
+  padding: 0;
+  color: white;
+  background: transparent;
+  text-align: left;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.poster {
+  aspect-ratio: 3 / 4;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  overflow: hidden;
+  border-radius: 12px;
+  background: linear-gradient(145deg, var(--c1), #100d24 80%);
+  border: 1px solid #ffffff18;
+  transition: transform .2s, border-color .2s;
+}
+.card:hover .poster {
+  transform: translateY(-4px);
+  border-color: #c084fc;
+}
+.poster::before {
+  content: "";
+  position: absolute;
+  width: 170px;
+  height: 170px;
+  border: 1px solid #ffffff25;
+  border-radius: 50%;
+  right: -75px;
+  top: -45px;
+  box-shadow: 0 0 0 20px #ffffff06, 0 0 0 40px #ffffff05;
+}
+.poster-icon { font-size: 51px; filter: drop-shadow(0 5px 15px #0008); }
+.poster-name {
+  font-weight: 900;
+  font-size: 17px;
+  text-align: center;
+  text-shadow: 0 2px 10px black;
+  margin-top: 13px;
+  z-index: 1;
+}
+.poster-tag {
+  font-size: 10px;
+  margin-top: 8px;
+  background: #09091499;
+  padding: 5px 9px;
+  border-radius: 12px;
+}
+.play {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: #ffffff25;
+  display: grid;
+  place-items: center;
+}
+.card-title { display: block; font-weight: 750; margin: 9px 0 3px; }
+.card-meta { color: var(--muted); font-size: 12px; }
+.player-box {
+  background: var(--panel);
+  border: 1px solid #302943;
+  padding: 16px;
+  border-radius: 15px;
+  margin: 30px 0;
+}
+.player-box p { color: var(--muted); font-size: 13px; line-height: 1.6; }
+video {
+  display: block;
+  width: 100%;
+  max-height: 520px;
+  background: #000;
+  border-radius: 10px;
+}
+.player-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.secondary {
+  color: white;
+  border: 1px solid #504568;
+  background: #211a35;
+  padding: 8px 13px;
+  border-radius: 8px;
+}
+.notice {
+  border-left: 3px solid var(--purple);
+  padding: 10px 13px;
+  background: #171329;
+  color: #d2cbe7;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.empty { color: var(--muted); padding: 20px 0; }
+footer {
+  text-align: center;
+  color: var(--muted);
+  border-top: 1px solid #28233a;
+  padding: 26px 15px;
+  font-size: 13px;
+}
+[hidden] { display: none !important; }
+@media (max-width: 480px) {
+  header { padding: 13px 4%; }
+  .logo { font-size: 21px; }
+  .search { width: 53%; padding: 10px; }
+  .hero { min-height: 300px; padding: 38px 5%; }
+  main { padding: 24px 4%; }
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 11px; }
+  .poster-icon { font-size: 43px; }
+}
 </style>
 </head>
 <body>
-<header class="top">
-  <div class="nav">
-    <div class="brand">Lil<b>Stream</b></div>
-    <nav aria-label="Navigation principale">
-      <button data-filter="Tous">Accueil</button><button data-filter="Film">Films</button><button data-filter="Série">Séries</button><button data-filter="Anime">Animes</button>
-    </nav>
-    <input id="search" class="search" type="search" placeholder="Rechercher un titre…" aria-label="Rechercher un titre">
-  </div>
+
+<header>
+  <div class="logo">Lil<span>Stream</span> ✦</div>
+  <input id="search" class="search" type="search"
+         placeholder="⌕ Rechercher..." aria-label="Rechercher un titre">
 </header>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="eyebrow">✦ Ton univers, ton écran</div>
+    <h1>Entre dans un autre univers.</h1>
+    <p>Découvre des univers animés, des films et des séries.
+       Choisis un titre et lance la lecture.</p>
+    <button class="primary" onclick="document.getElementById('catalogue').scrollIntoView({behavior:'smooth'})">
+      Explorer le catalogue ↓
+    </button>
+  </div>
+</section>
+
 <main>
-  <section class="hero">
-    <div class="hero-content">
-      <div class="eyebrow">Ton univers de divertissement</div>
-      <h1>Découvre ta prochaine histoire.</h1>
-      <p>Explore un catalogue de films, de séries et d’animes dans une seule plateforme. Tes prochaines découvertes commencent ici.</p>
-      <div class="actions"><button class="primary" id="explore">▶ Explorer le catalogue</button><button class="secondary" id="how">Comment ça marche ?</button></div>
+  <section class="section">
+    <h2>Explorer</h2>
+    <div class="categories" id="categories">
+      <button class="chip active" data-filter="Tout">Tout</button>
+      <button class="chip" data-filter="Anime">🎌 Animés</button>
+      <button class="chip" data-filter="Film">🎬 Films</button>
+      <button class="chip" data-filter="Série">📺 Séries</button>
     </div>
   </section>
-  <div class="filters" aria-label="Filtres du catalogue">
-    <button class="chip active" data-filter="Tous">Tout</button><button class="chip" data-filter="Film">Films</button><button class="chip" data-filter="Série">Séries</button><button class="chip" data-filter="Anime">Animes</button>
-  </div>
-  <div class="section-head"><h2 id="heading">À découvrir</h2><span class="muted" id="count"></span></div>
-  <section class="grid" id="catalog" aria-live="polite"></section>
-  <aside class="notice"><strong>Version de démonstration.</strong> Les titres ci-dessous servent à tester l’interface. Ce prototype ne contient pas de films commerciaux complets. Avant la mise en ligne publique, ajoute uniquement des vidéos que tu possèdes ou que tu es autorisé à diffuser. Les affiches et informations réelles pourront être connectées à un catalogue sous réserve de respecter ses conditions d’utilisation.</aside>
+
+  <section class="player-box" id="lecteur">
+    <div class="player-top">
+      <div>
+        <div class="eyebrow">Lecteur LilStream</div>
+        <h2 id="player-title" style="margin:7px 0 0">Vidéo de démonstration</h2>
+      </div>
+      <button class="secondary" id="stop">Arrêter</button>
+    </div>
+    <video id="video" controls playsinline preload="metadata"
+      poster="https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1000&q=80">
+      <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
+      Ton navigateur ne prend pas en charge la vidéo.
+    </video>
+    <p id="player-description">Vidéo d'exemple libre de droits pour tester le lecteur.</p>
+    <div class="notice">
+      ℹ️ Les titres ci-dessous sont des cartes de démonstration.
+      La vidéo fournie est un exemple de lecture, pas un épisode ou un film commercial.
+      Pour ajouter un vrai contenu, utilise une vidéo que tu as créée, qui est libre de droits,
+      ou que tu as l'autorisation de diffuser.
+    </div>
+  </section>
+
+  <section class="section" id="catalogue">
+    <h2 id="catalogue-title">✨ À découvrir</h2>
+    <div class="grid" id="grid"></div>
+    <p class="empty" id="empty" hidden>Aucun titre trouvé. Essaie une autre recherche.</p>
+  </section>
 </main>
-<footer class="footer">© <span id="year"></span> LilStream · Projet indépendant · Conditions · Confidentialité</footer>
-<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-  <div class="dialog">
-    <div class="dialog-top"><button class="close" id="close" aria-label="Fermer">×</button><span class="eyebrow" id="modalType">DÉCOUVERTE</span><h2 id="modalTitle">Titre</h2><span class="pill" id="modalYear"></span><span class="pill">Démo</span></div>
-    <div class="dialog-body"><p id="modalDescription"></p><p class="muted" id="modalHint"></p><button class="primary" id="modalAction">Compris</button></div>
-  </div>
-</div>
+
+<footer>
+  <div class="logo">Lil<span>Stream</span> ✦</div>
+  <p>Un univers de divertissement, partout avec toi.</p>
+  <p>© <span id="year"></span> LilStream — Site de démonstration.</p>
+</footer>
+
 <script>
+const demoVideo =
+  "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4";
+
 const titles = [
- {title:"Au-delà des étoiles",type:"Film",year:2025,genre:"Science-fiction",symbol:"✦",c1:"#1a5269",c2:"#191329",desc:"Une aventure spatiale fictive pour tester la présentation des films."},
- {title:"Les Ombres de minuit",type:"Série",year:2024,genre:"Mystère",symbol:"☾",c1:"#653445",c2:"#17101f",desc:"Une série fictive de mystère, présentée ici comme contenu de démonstration."},
- {title:"Légende des dragons",type:"Anime",year:2025,genre:"Fantaisie",symbol:"龍",c1:"#8c3c25",c2:"#29122d",desc:"Un anime fictif d’aventure et de fantaisie pour tester la catégorie anime."},
- {title:"Le Dernier Horizon",type:"Film",year:2023,genre:"Aventure",symbol:"⌁",c1:"#a85c35",c2:"#222b4b",desc:"Une aventure imaginaire au bout du monde."},
- {title:"Code Zéro",type:"Série",year:2025,genre:"Thriller",symbol:"⌘",c1:"#255b66",c2:"#17152d",desc:"Un thriller fictif sur une équipe qui résout des énigmes numériques."},
- {title:"Éclipse Rouge",type:"Anime",year:2024,genre:"Action",symbol:"◉",c1:"#a52a3b",c2:"#20152f",desc:"Une histoire d’action fictive pour la maquette LilStream."},
- {title:"Le Royaume perdu",type:"Film",year:2022,genre:"Fantaisie",symbol:"♜",c1:"#5a6036",c2:"#251a30",desc:"Une aventure imaginaire dans un royaume oublié."},
- {title:"Nos étés",type:"Série",year:2023,genre:"Drame",symbol:"☀",c1:"#b16a62",c2:"#35345b",desc:"Une série dramatique fictive autour de l’amitié et des choix de vie."},
- {title:"Nova Academy",type:"Anime",year:2025,genre:"Fantaisie",symbol:"✧",c1:"#534a9b",c2:"#142a51",desc:"Un anime scolaire fantastique fictif."},
- {title:"Course contre le temps",type:"Film",year:2024,genre:"Action",symbol:"➤",c1:"#7c4c25",c2:"#191f34",desc:"Un film d’action fictif pour la démonstration du catalogue."}
+  {name:"Nuit étoilée", type:"Anime", icon:"🌌", year:"Démo", color:"#4338ca",
+   desc:"Un univers nocturne à explorer."},
+  {name:"L'ultime voyage", type:"Film", icon:"🚀", year:"Démo", color:"#be185d",
+   desc:"Une aventure spatiale imaginaire."},
+  {name:"Académie des héros", type:"Anime", icon:"⚡", year:"Démo", color:"#b45309",
+   desc:"Bienvenue dans une académie extraordinaire."},
+  {name:"Mystère à Tokyo", type:"Série", icon:"🌃", year:"Démo", color:"#0369a1",
+   desc:"Une ville pleine de mystères."},
+  {name:"Le royaume perdu", type:"Film", icon:"🏯", year:"Démo", color:"#047857",
+   desc:"Une aventure dans un royaume imaginaire."},
+  {name:"Samouraï de l'aube", type:"Anime", icon:"⚔️", year:"Démo", color:"#9f1239",
+   desc:"Un guerrier face à son destin."},
+  {name:"Les chroniques lunaires", type:"Série", icon:"🌙", year:"Démo", color:"#6d28d9",
+   desc:"Des aventures sous la lumière de la lune."},
+  {name:"Océan infini", type:"Film", icon:"🌊", year:"Démo", color:"#0e7490",
+   desc:"Une aventure au cœur des océans."},
+  {name:"Dragon céleste", type:"Anime", icon:"🐉", year:"Démo", color:"#7e22ce",
+   desc:"Un monde fantastique peuplé de dragons."},
+  {name:"Dernier signal", type:"Série", icon:"📡", year:"Démo", color:"#475569",
+   desc:"Un signal mystérieux bouleverse le quotidien."},
+  {name:"L'île des rêves", type:"Film", icon:"🏝️", year:"Démo", color:"#0f766e",
+   desc:"Une île qui cache un secret."},
+  {name:"Étoile rouge", type:"Anime", icon:"🔥", year:"Démo", color:"#c2410c",
+   desc:"Une nouvelle légende commence."}
 ];
-let currentFilter="Tous";
-const catalog=document.getElementById("catalog"), search=document.getElementById("search");
-function render(){
- const q=search.value.trim().toLocaleLowerCase("fr");
- const visible=titles.filter(x=>(currentFilter==="Tous"||x.type===currentFilter)&&[x.title,x.type,x.genre,String(x.year)].some(v=>v.toLocaleLowerCase("fr").includes(q)));
- document.getElementById("count").textContent=visible.length+" titre"+(visible.length>1?"s":"");
- document.getElementById("heading").textContent=q?"Résultats de recherche":currentFilter==="Tous"?"À découvrir":currentFilter+"s";
- catalog.innerHTML="";
- if(!visible.length){catalog.innerHTML='<div class="empty">Aucun titre trouvé. Essaie une autre recherche.</div>';return;}
- visible.forEach(x=>{
-  const card=document.createElement("article");card.className="item";card.tabIndex=0;card.setAttribute("role","button");card.setAttribute("aria-label","Voir "+x.title);
-  const poster=document.createElement("div");poster.className="poster";poster.style.setProperty("--c1",x.c1);poster.style.setProperty("--c2",x.c2);
-  const symbol=document.createElement("span");symbol.className="symbol";symbol.textContent=x.symbol;
-  const kind=document.createElement("span");kind.className="kind";kind.textContent=x.type;
-  const name=document.createElement("strong");name.textContent=x.title;poster.append(symbol,kind,name);
-  const h=document.createElement("h3");h.textContent=x.title;
-  const meta=document.createElement("div");meta.className="meta";meta.textContent=x.year+" · "+x.genre;
-  card.append(poster,h,meta);card.addEventListener("click",()=>openTitle(x));card.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openTitle(x)}});
-  catalog.append(card);
- });
+
+const grid = document.getElementById("grid");
+const search = document.getElementById("search");
+const empty = document.getElementById("empty");
+let activeFilter = "Tout";
+
+function render() {
+  const query = search.value.trim().toLocaleLowerCase("fr");
+  const filtered = titles.filter(item =>
+    (activeFilter === "Tout" || item.type === activeFilter) &&
+    (item.name.toLocaleLowerCase("fr").includes(query) ||
+     item.type.toLocaleLowerCase("fr").includes(query))
+  );
+
+  grid.innerHTML = "";
+
+  filtered.forEach(item => {
+    const card = document.createElement("button");
+    card.className = "card";
+    card.type = "button";
+    card.setAttribute("aria-label", "Lire la démonstration : " + item.name);
+
+    const poster = document.createElement("div");
+    poster.className = "poster";
+    poster.style.setProperty("--c1", item.color);
+
+    const icon = document.createElement("span");
+    icon.className = "poster-icon";
+    icon.textContent = item.icon;
+
+    const name = document.createElement("span");
+    name.className = "poster-name";
+    name.textContent = item.name;
+
+    const tag = document.createElement("span");
+    tag.className = "poster-tag";
+    tag.textContent = item.type;
+
+    const play = document.createElement("span");
+    play.className = "play";
+    play.textContent = "▶";
+
+    poster.append(icon, name, tag, play);
+
+    const title = document.createElement("span");
+    title.className = "card-title";
+    title.textContent = item.name;
+
+    const meta = document.createElement("span");
+    meta.className = "card-meta";
+    meta.textContent = item.type + " · Démonstration";
+
+    card.append(poster, title, meta);
+    card.addEventListener("click", () => playDemo(item));
+    grid.appendChild(card);
+  });
+
+  empty.hidden = filtered.length !== 0;
 }
-function openTitle(x){
- document.getElementById("modalTitle").textContent=x.title;
- document.getElementById("modalType").textContent=x.type.toUpperCase()+" · "+x.genre.toUpperCase();
- document.getElementById("modalYear").textContent=String(x.year);
- document.getElementById("modalDescription").textContent=x.desc;
- document.getElementById("modalHint").textContent="Cette fiche est un exemple. Le lecteur vidéo sera relié aux contenus autorisés lors d’une prochaine étape.";
- document.getElementById("modal").classList.add("open");
+
+function playDemo(item) {
+  const video = document.getElementById("video");
+  document.getElementById("player-title").textContent = item.name;
+  document.getElementById("player-description").textContent =
+    item.desc + " La vidéo lue est un extrait de démonstration libre de droits, et non le contenu commercial du titre.";
+  video.pause();
+  video.src = demoVideo;
+  video.load();
+  document.getElementById("lecteur").scrollIntoView({behavior:"smooth", block:"start"});
+  video.play().catch(() => {
+    document.getElementById("player-description").textContent =
+      "Appuie sur Lecture pour lancer la vidéo de démonstration.";
+  });
 }
-function setFilter(f){currentFilter=f;document.querySelectorAll("[data-filter]").forEach(b=>b.classList.toggle("active",b.classList.contains("chip")&&b.dataset.filter===f));render();}
-document.querySelectorAll("[data-filter]").forEach(b=>b.addEventListener("click",()=>setFilter(b.dataset.filter)));
-search.addEventListener("input",render);
-document.getElementById("explore").addEventListener("click",()=>document.getElementById("catalog").scrollIntoView({behavior:"smooth"}));
-document.getElementById("how").addEventListener("click",()=>{document.getElementById("modalType").textContent="BIENVENUE SUR LILSTREAM";document.getElementById("modalTitle").textContent="Comment ça marche ?";document.getElementById("modalYear").textContent="Prototype";document.getElementById("modalDescription").textContent="Utilise les catégories pour filtrer le catalogue, ou la recherche pour retrouver un titre. Sélectionne une fiche pour voir les détails. Cette première version est une maquette interactive, pas encore un service de streaming complet.";document.getElementById("modalHint").textContent="Prochaine étape : connecter un catalogue et des vidéos légalement disponibles.";document.getElementById("modal").classList.add("open");});
-function closeModal(){document.getElementById("modal").classList.remove("open")}
-document.getElementById("close").addEventListener("click",closeModal);document.getElementById("modalAction").addEventListener("click",closeModal);
-document.getElementById("modal").addEventListener("click",e=>{if(e.target.id==="modal")closeModal()});
-document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
-document.getElementById("year").textContent=new Date().getFullYear();
+
+document.getElementById("categories").addEventListener("click", event => {
+  const button = event.target.closest("button[data-filter]");
+  if (!button) return;
+  activeFilter = button.dataset.filter;
+  document.querySelectorAll(".chip").forEach(chip =>
+    chip.classList.toggle("active", chip === button)
+  );
+  document.getElementById("catalogue-title").textContent =
+    activeFilter === "Tout" ? "✨ À découvrir" : "✨ " + activeFilter + "s";
+  render();
+});
+
+search.addEventListener("input", render);
+
+document.getElementById("stop").addEventListener("click", () => {
+  const video = document.getElementById("video");
+  video.pause();
+  video.currentTime = 0;
+});
+
+document.getElementById("year").textContent = new Date().getFullYear();
 render();
 </script>
 </body>
